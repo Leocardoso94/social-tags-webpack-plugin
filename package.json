@@ -1,0 +1,55 @@
+{
+  "name": "webpack-pwa-manifest",
+  "version": "3.4.1",
+  "description": "Progressive Web Application (PWA) Manifest Generator",
+  "main": "index.js",
+  "types": "index.d.ts",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/arthurbergmz/webpack-pwa-manifest.git"
+  },
+  "keywords": [
+    "pwa",
+    "manifest",
+    "gen",
+    "generator",
+    "webpack",
+    "webapp",
+    "manifest.json",
+    "progressive",
+    "web",
+    "app",
+    "application"
+  ],
+  "scripts": {
+    "build": "babel src --out-dir dist",
+    "test": "npm run build && node tests/index.js"
+  },
+  "author": "Arthur A. Bergamaschi <arthurbergmz@gmail.com>",
+  "license": "MIT",
+  "dependencies": {
+    "css-color-names": "0.0.4",
+    "jimp": "^0.2.28",
+    "mime": "^1.6.0"
+  },
+  "devDependencies": {
+    "babel-cli": "^6.26.0",
+    "babel-core": "^6.26.0",
+    "babel-eslint": "^8.0.3",
+    "babel-preset-env": "^1.6.1",
+    "eslint": "^4.13.1",
+    "html-webpack-plugin": "^2.30.1",
+    "list-directory-contents": "0.0.3",
+    "webpack": "^3.10.0"
+  },
+  "files": [
+    "dist",
+    "CHANGELOG.md",
+    "index.d.ts",
+    "index.js",
+    "LICENSE",
+    "package-lock.json",
+    "package.json",
+    "README.md"
+  ]
+}
