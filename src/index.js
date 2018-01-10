@@ -12,12 +12,10 @@ if (!Object.entries)
     return resArray;
   };
 
-class WebpackPwaManifest {
+class SocialTagsPlugin {
   constructor(options = {}) {
 
-    this.assets = null;
     this.htmlPlugin = false;
-    const shortName = options.short_name || options.name || 'App';
     this.options = Object.assign({
       publicPath: null,
       url: 'https://freecourses.github.io/'
@@ -75,4 +73,4 @@ class WebpackPwaManifest {
   }
 }
 
-module.exports = WebpackPwaManifest;
+module.exports = SocialTagsPlugin;
