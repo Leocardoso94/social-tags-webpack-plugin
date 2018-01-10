@@ -1,73 +1,78 @@
-import { buildResources, injectResources, generateHtmlTags, applyTag } from './injector'
-import { processImage } from './images'
+import { buildResources, injectResources, generateHtmlTags, applyTag } from './injector';
+import { processImage } from './images';
+
+if (!Object.entries)
+  Object.entries = function (obj) {
+    var ownProps = Object.keys(obj),
+      i = ownProps.length,
+      resArray = new Array(i); // preallocate the Array
+
+    while (i--)
+      resArray[i] = [ownProps[i], obj[ownProps[i]]];
+    return resArray;
+  };
 
 class WebpackPwaManifest {
   constructor(options = {}) {
 
-    this.assets = null
-    this.htmlPlugin = false
-    const shortName = options.short_name || options.name || 'App'
+    this.assets = null;
+    this.htmlPlugin = false;
+    const shortName = options.short_name || options.name || 'App';
     this.options = Object.assign({
-      filename: 'manifest.json',
-      name: 'App',
-      short_name: shortName,
-      orientation: 'portrait',
-      display: 'standalone',
-      start_url: '.',
-      fingerprints: true,
-      ios: false,
       publicPath: null,
-      includeDirectory: true
-    }, options)
+      url: 'https://freecourses.github.io/'
+    }, options);
   }
 
   apply(compiler) {
-    const that = this
+    const that = this;
     compiler.plugin('compilation', (compilation) => {
       compilation.plugin('html-webpack-plugin-before-html-processing', function (htmlPluginData, callback) {
-        if (!that.htmlPlugin) that.htmlPlugin = true
+        if (!that.htmlPlugin) that.htmlPlugin = true;
 
 
         // const tags = generateAppleTags(that.options, that.assets)
         const tags = {};
 
-        Object.entries(that.options.facebook).forEach(fbTags => {
+        Object.entries(Object.assign(that.options.facebook, that.options.twitter)).forEach(socialTags => {
+          const isTwitterOrFacebookTag = socialTags[0].match('twitter') ? 'name' : "property";
+
           const tag = {
-            property: fbTags[0].trim(),
-            content: fbTags[1].trim()
+            [isTwitterOrFacebookTag]: socialTags[0].trim(),
+            content: socialTags[1].trim()
+          };
+
+
+          if (tag[isTwitterOrFacebookTag].match('image')) {
+            tag.content = (that.options.url + socialTags[1]).trim();
+            applyTag(tags, 'meta', tag);
+            processImage(socialTags[1], compilation.options.output.path);
+
+          } else {
+            applyTag(tags, 'meta', tag);
           }
-          if (tag.property.match('image')) processImage(fbTags[1], compilation.options.output.path);
-          applyTag(tags, 'meta', tag)
         });
 
-        Object.entries(that.options.twitter).forEach(fbTags => {
-          const tag = {
-            name: fbTags[0].trim(),
-            content: fbTags[1].trim()
-          }
-          if (!tag.name.match('image'))
-            applyTag(tags, 'meta', tag)
-        });
 
 
-        htmlPluginData.html = htmlPluginData.html.replace(/(<\/head>)/i, `${generateHtmlTags(tags)}</head>`)
+        htmlPluginData.html = htmlPluginData.html.replace(/(<\/head>)/i, `${generateHtmlTags(tags)}</head>`);
 
 
 
-        callback(null, htmlPluginData)
+        callback(null, htmlPluginData);
 
-      })
-    })
+      });
+    });
     compiler.plugin('emit', (compilation, callback) => {
       if (that.htmlPlugin) {
-        injectResources(compilation, that.assets, callback)
+        injectResources(compilation, that.assets, callback);
       } else {
-        buildResources(that, that.options.publicPath || compilation.options.output.publicPath, () => {
-          injectResources(compilation, that.assets, callback)
-        })
+        buildResources(that, compilation.options.output.publicPath, () => {
+          injectResources(compilation, that.assets, callback);
+        });
       }
-    })
+    });
   }
 }
 
-module.exports = WebpackPwaManifest
+module.exports = WebpackPwaManifest;

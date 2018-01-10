@@ -1,9 +1,3 @@
-import path from 'path'
-import generateFingerprint from '../helpers/fingerprint'
-import { joinURI } from '../helpers/uri'
-import { processImage } from '../icons'
-import except from '../helpers/except'
-
 const voidTags = [
   'area',
   'base',
@@ -21,7 +15,7 @@ const voidTags = [
   'source',
   'track',
   'wbr'
-]
+];
 
 // const appleTags = {
 //   'apple-touch-icon': 'link',
@@ -37,11 +31,11 @@ const voidTags = [
 
 export function buildResources(_this, publicPath, callback) {
   if (_this.assets && _this.options.inject) { // already cached and ready to inject
-    callback()
+    callback();
   } else {
-    publicPath = publicPath || ''
+    publicPath = publicPath || '';
 
-    callback()
+    callback();
 
   }
 }
@@ -52,49 +46,49 @@ export function injectResources(compilation, assets, callback) {
       compilation.assets[asset.output] = {
         source: () => asset.source,
         size: () => asset.size
-      }
+      };
     }
   }
-  callback()
+  callback();
 }
 
 export function applyTag(obj, tag, content) {
-  if (!content) return
+  if (!content) return;
 
   if (obj[tag]) {
     if (Array.isArray(obj[tag])) {
 
-      obj[tag].push(content)
+      obj[tag].push(content);
 
     } else {
 
-      obj[tag] = [obj[tag], content]
+      obj[tag] = [obj[tag], content];
 
     }
   } else {
-    obj[tag] = content
+    obj[tag] = content;
 
   }
 }
 
 export function generateHtmlTags(tags) {
-  let html = ''
+  let html = '';
   for (let tag in tags) {
-    const attrs = tags[tag]
+    const attrs = tags[tag];
     if (Array.isArray(attrs)) {
       for (let a of attrs) {
         html = `${html}${generateHtmlTags({
           [tag]: a
-        })}`
+        })}`;
       }
     } else {
-      html = `${html}<${tag}`
+      html = `${html}<${tag}`;
       for (let attr in attrs) {
-        html = `${html} ${attr}="${attrs[attr]}"`
+        html = `${html} ${attr}="${attrs[attr]}"`;
       }
-      html = voidTags.indexOf(tag) === -1 ? `${html}></${tag}>` : `${html} />`
+      html = voidTags.indexOf(tag) === -1 ? `${html}></${tag}>` : `${html} />`;
     }
   }
 
-  return html
+  return html;
 }
