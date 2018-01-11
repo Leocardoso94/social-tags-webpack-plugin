@@ -17,16 +17,6 @@ const voidTags = [
   'wbr'
 ];
 
-// const appleTags = {
-//   'apple-touch-icon': 'link',
-//   'apple-touch-startup-image': 'link',
-//   'apple-mobile-web-app-title': 'meta',
-//   'apple-mobile-web-app-capable': 'meta',
-//   'batata1': 'meta',
-//   'batata2': 'meta',
-//   'batata3': 'meta',
-//   'batata4': 'meta'
-// }
 
 
 export function buildResources(_this, publicPath, callback) {

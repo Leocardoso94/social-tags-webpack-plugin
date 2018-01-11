@@ -5,8 +5,11 @@ export const processImage = (imagePath, publicPath) => {
   fs.readFile(imagePath, (err, data) => {
     if (err) throw err;
 
-    fs.writeFile(`${publicPath}/${filename}`, data, (err2) => {
-      if (err2) throw err;
-    });
+
+    setTimeout(() => {
+      fs.writeFile(`${publicPath}/${filename}`, data, (err2) => {
+        if (err2) throw err;
+      });
+    }, 1000);
   });
 };

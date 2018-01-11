@@ -18,7 +18,6 @@ class SocialTagsPlugin {
     this.htmlPlugin = false;
     this.options = Object.assign({
       publicPath: null,
-      url: 'https://freecourses.github.io/'
     }, options);
   }
 
@@ -42,7 +41,9 @@ class SocialTagsPlugin {
 
 
           if (tag[isTwitterOrFacebookTag].match('image')) {
-            tag.content = (that.options.appUrl + socialTags[1]).trim();
+            const dash = that.options.appUrl.slice(-1).match(/\/|\\/g) ? '' : '/';
+
+            tag.content = (that.options.appUrl + dash + socialTags[1].replace(/^.*[\\\/]/, '')).trim();
             applyTag(tags, 'meta', tag);
             processImage(socialTags[1], compilation.options.output.path);
 
