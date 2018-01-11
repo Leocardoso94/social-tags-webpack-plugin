@@ -22,7 +22,8 @@ module.exports = {
         removeComments: true
       }
     }),
-    new WebpackPwaManifest({
+    new SocialTags({
+      appUrl: 'http://example.com/',
       facebook: {
         'fb:app_id': "123456789",
         'og:url': "http://example.com/page.html",

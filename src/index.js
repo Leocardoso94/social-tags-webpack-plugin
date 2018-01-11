@@ -42,7 +42,7 @@ class SocialTagsPlugin {
 
 
           if (tag[isTwitterOrFacebookTag].match('image')) {
-            tag.content = (that.options.url + socialTags[1]).trim();
+            tag.content = (that.options.appUrl + socialTags[1]).trim();
             applyTag(tags, 'meta', tag);
             processImage(socialTags[1], compilation.options.output.path);
 
@@ -50,8 +50,6 @@ class SocialTagsPlugin {
             applyTag(tags, 'meta', tag);
           }
         });
-
-
 
         htmlPluginData.html = htmlPluginData.html.replace(/(<\/head>)/i, `${generateHtmlTags(tags)}</head>`);
 
