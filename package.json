@@ -1,12 +1,9 @@
 {
   "name": "social-tags-webpack-plugin",
-  "version": "0.0.5",
-  "description": "Progressive Web Application (PWA) Manifest Generator",
+  "version": "0.0.7",
+  "description": "A wepback plugin to generate social meta-tags",
   "main": "index.js",
-  "repository": {
-    "type": "git",
-    "url": "https://github.com/leocardoso94/social-tags-webpack-plugin.git"
-  },
+  "repository": "https://github.com/leocardoso94/social-tags-webpack-plugin.git",
   "keywords": [
     "webpack",
     "social",
