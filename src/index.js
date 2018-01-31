@@ -1,20 +1,19 @@
 import { buildResources, injectResources, generateHtmlTags, applyTag } from './injector';
-import { processImage } from './images';
+import processImage from './process_image';
 
-if (!Object.entries)
-  Object.entries = function (obj) {
-    var ownProps = Object.keys(obj),
-      i = ownProps.length,
-      resArray = new Array(i); // preallocate the Array
+if (!Object.entries) {
+  Object.entries = function entries(obj) {
+    const ownProps = Object.keys(obj);
+    let i = ownProps.length;
+    const resArray = new Array(i); // preallocate the Array
 
-    while (i--)
-      resArray[i] = [ownProps[i], obj[ownProps[i]]];
+    while (i--) { resArray[i] = [ownProps[i], obj[ownProps[i]]]; }
     return resArray;
   };
+}
 
 class SocialTagsPlugin {
   constructor(options = {}) {
-
     this.htmlPlugin = false;
     this.options = Object.assign({
       publicPath: null,
@@ -24,40 +23,36 @@ class SocialTagsPlugin {
   apply(compiler) {
     const that = this;
     compiler.plugin('compilation', (compilation) => {
-      compilation.plugin('html-webpack-plugin-before-html-processing', function (htmlPluginData, callback) {
+      compilation.plugin('html-webpack-plugin-before-html-processing', (htmlPluginData, callback) => {
         if (!that.htmlPlugin) that.htmlPlugin = true;
 
-
-        // const tags = generateAppleTags(that.options, that.assets)
         const tags = {};
 
-        Object.entries(Object.assign(that.options.facebook, that.options.twitter)).forEach(socialTags => {
-          const isTwitterOrFacebookTag = socialTags[0].match('twitter') ? 'name' : "property";
+        Object.entries(Object.assign(that.options.facebook, that.options.twitter))
+          .forEach((socialTags) => {
+            const isTwitterOrFacebookTag = socialTags[0].match('twitter') ? 'name' : 'property';
 
-          const tag = {
-            [isTwitterOrFacebookTag]: socialTags[0].trim(),
-            content: socialTags[1].trim()
-          };
+            const tag = {
+              [isTwitterOrFacebookTag]: socialTags[0].trim(),
+              content: socialTags[1].trim(),
+            };
 
 
-          if (tag[isTwitterOrFacebookTag].match('image')) {
-            const dash = that.options.appUrl.slice(-1).match(/\/|\\/g) ? '' : '/';
+            if (tag[isTwitterOrFacebookTag].match('image')) {
+              const dash = that.options.appUrl.slice(-1).match(/\/|\\/g) ? '' : '/';
 
-            tag.content = (that.options.appUrl + dash + socialTags[1].replace(/^.*[\\\/]/, '')).trim();
-            applyTag(tags, 'meta', tag);
-            processImage(socialTags[1], compilation.options.output.path);
-
-          } else {
-            applyTag(tags, 'meta', tag);
-          }
-        });
+              tag.content = (that.options.appUrl + dash + socialTags[1].replace(/^.*[\\\/]/, '')).trim();
+              applyTag(tags, 'meta', tag);
+              processImage(socialTags[1], compilation.options.output.path);
+            } else {
+              applyTag(tags, 'meta', tag);
+            }
+          });
 
         htmlPluginData.html = htmlPluginData.html.replace(/(<\/head>)/i, `${generateHtmlTags(tags)}</head>`);
 
 
-
         callback(null, htmlPluginData);
-
       });
     });
     compiler.plugin('emit', (compilation, callback) => {

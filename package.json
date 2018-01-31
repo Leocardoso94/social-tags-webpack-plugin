@@ -14,7 +14,7 @@
   ],
   "scripts": {
     "build": "babel src --out-dir dist",
-    "test": "npm run build && node tests/index.js"
+    "fix-lint": "eslint --fix **/*.js"
   },
   "author": "Leonardo Cardoso <Leocardoso94@gmail.com>",
   "license": "MIT",
@@ -27,7 +27,9 @@
     "eslint": "^4.13.1",
     "html-webpack-plugin": "^2.30.1",
     "list-directory-contents": "0.0.3",
-    "webpack": "^3.10.0"
+    "webpack": "^3.10.0",
+    "eslint-config-airbnb-base": "^12.1.0",
+    "eslint-plugin-import": "^2.8.0"
   },
   "files": [
     "dist",

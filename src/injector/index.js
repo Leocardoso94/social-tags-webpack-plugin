@@ -14,9 +14,8 @@ const voidTags = [
   'param',
   'source',
   'track',
-  'wbr'
+  'wbr',
 ];
-
 
 
 export function buildResources(_this, publicPath, callback) {
@@ -26,16 +25,15 @@ export function buildResources(_this, publicPath, callback) {
     publicPath = publicPath || '';
 
     callback();
-
   }
 }
 
 export function injectResources(compilation, assets, callback) {
   if (assets) {
-    for (let asset of assets) {
+    for (const asset of assets) {
       compilation.assets[asset.output] = {
         source: () => asset.source,
-        size: () => asset.size
+        size: () => asset.size,
       };
     }
   }
@@ -47,33 +45,28 @@ export function applyTag(obj, tag, content) {
 
   if (obj[tag]) {
     if (Array.isArray(obj[tag])) {
-
       obj[tag].push(content);
-
     } else {
-
       obj[tag] = [obj[tag], content];
-
     }
   } else {
     obj[tag] = content;
-
   }
 }
 
 export function generateHtmlTags(tags) {
   let html = '';
-  for (let tag in tags) {
+  for (const tag in tags) {
     const attrs = tags[tag];
     if (Array.isArray(attrs)) {
-      for (let a of attrs) {
+      for (const a of attrs) {
         html = `${html}${generateHtmlTags({
-          [tag]: a
+          [tag]: a,
         })}`;
       }
     } else {
       html = `${html}<${tag}`;
-      for (let attr in attrs) {
+      for (const attr in attrs) {
         html = `${html} ${attr}="${attrs[attr]}"`;
       }
       html = voidTags.indexOf(tag) === -1 ? `${html}></${tag}>` : `${html} />`;

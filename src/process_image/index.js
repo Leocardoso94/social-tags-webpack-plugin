@@ -1,6 +1,6 @@
 import fs from 'fs';
 
-export const processImage = (imagePath, publicPath) => {
+const processImage = (imagePath, publicPath) => {
   const filename = imagePath.replace(/^.*[\\\/]/, '');
   fs.readFile(imagePath, (err, data) => {
     if (err) throw err;
@@ -13,3 +13,6 @@ export const processImage = (imagePath, publicPath) => {
     }, 1000);
   });
 };
+
+
+export default processImage;
