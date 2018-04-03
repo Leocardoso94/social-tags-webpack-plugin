@@ -49,7 +49,7 @@ plugins: [
         'og:url': "http://example.com/page.html",
         'og:type': "website",
         'og:title': "Content Title",
-        'og:image': path.resolve('src/img/book.png'),
+        'og:image': 'src/img/book.png',
         'og:description': "Description Here",
         'og:site_name': "Site Name",
         'og:locale': "en_US",
@@ -62,7 +62,7 @@ plugins: [
         "twitter:url": "http://example.com/page.html",
         "twitter:title": "Content Title",
         "twitter:description": "Content description less than 200 characters",
-        "twitter:image": path.resolve('src/img/book.png')
+        "twitter:image": './src/img/book.png'
       },
     })
 ]
