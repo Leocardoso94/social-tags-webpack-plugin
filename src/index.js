@@ -1,4 +1,9 @@
-import { buildResources, injectResources, generateHtmlTags, applyTag } from './injector';
+import {
+  buildResources,
+  injectResources,
+  generateHtmlTags,
+  applyTag,
+} from './injector';
 import processImage from './process_image';
 
 if (!Object.entries) {
@@ -7,7 +12,9 @@ if (!Object.entries) {
     let i = ownProps.length;
     const resArray = new Array(i); // preallocate the Array
 
-    while (i--) { resArray[i] = [ownProps[i], obj[ownProps[i]]]; }
+    while (i--) {
+      resArray[i] = [ownProps[i], obj[ownProps[i]]];
+    }
     return resArray;
   };
 }
@@ -21,14 +28,13 @@ class SocialTagsPlugin {
   }
 
   apply(compiler) {
-    const that = this;
     compiler.plugin('compilation', (compilation) => {
       compilation.plugin('html-webpack-plugin-before-html-processing', (htmlPluginData, callback) => {
-        if (!that.htmlPlugin) that.htmlPlugin = true;
+        if (!this.htmlPlugin) this.htmlPlugin = true;
 
         const tags = {};
 
-        Object.entries(Object.assign(that.options.facebook, that.options.twitter))
+        Object.entries(Object.assign(this.options.facebook, this.options.twitter))
           .forEach((socialTags) => {
             const isTwitterOrFacebookTag = socialTags[0].match('twitter') ? 'name' : 'property';
 
@@ -39,9 +45,9 @@ class SocialTagsPlugin {
 
 
             if (tag[isTwitterOrFacebookTag].match('image')) {
-              const dash = that.options.appUrl.slice(-1).match(/\/|\\/g) ? '' : '/';
+              const dash = this.options.appUrl.slice(-1).match(/\/|\\/g) ? '' : '/';
 
-              tag.content = (that.options.appUrl + dash + socialTags[1].replace(/^.*[\\\/]/, '')).trim();
+              tag.content = (this.options.appUrl + dash + socialTags[1].replace(/^.*[\\\/]/, '')).trim();
               applyTag(tags, 'meta', tag);
               processImage(socialTags[1], compilation.options.output.path);
             } else {
@@ -56,11 +62,11 @@ class SocialTagsPlugin {
       });
     });
     compiler.plugin('emit', (compilation, callback) => {
-      if (that.htmlPlugin) {
-        injectResources(compilation, that.assets, callback);
+      if (this.htmlPlugin) {
+        injectResources(compilation, this.assets, callback);
       } else {
-        buildResources(that, compilation.options.output.publicPath, () => {
-          injectResources(compilation, that.assets, callback);
+        buildResources(this, compilation.options.output.publicPath, () => {
+          injectResources(compilation, this.assets, callback);
         });
       }
     });
