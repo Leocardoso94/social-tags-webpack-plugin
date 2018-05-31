@@ -28,10 +28,10 @@ class SocialTagsPlugin {
   }
 
   apply(compiler) {
-    compiler.plugin('compilation', (compilation) => {
-      compilation.plugin('html-webpack-plugin-before-html-processing', (htmlPluginData, callback) => {
+    compiler.hooks.compilation.tap('SocialTagsPlugin', (compilation) => {
+      compilation.hooks.htmlWebpackPluginAfterHtmlProcessing.tapAsync('SocialTagsPlugin', (htmlPluginData, callback) => {
         if (!this.htmlPlugin) this.htmlPlugin = true;
-
+        console.log(htmlPluginData);
         const tags = {};
 
         Object.entries(Object.assign(this.options.facebook, this.options.twitter))
@@ -47,7 +47,7 @@ class SocialTagsPlugin {
             if (tag[isTwitterOrFacebookTag].match('image')) {
               const dash = this.options.appUrl.slice(-1).match(/\/|\\/g) ? '' : '/';
 
-              tag.content = (this.options.appUrl + dash + socialTags[1].replace(/^.*[\\\/]/, '')).trim();
+              tag.content = (this.options.appUrl + dash + socialTags[1].replace(/^.*[\\/]/, '')).trim();
               applyTag(tags, 'meta', tag);
               processImage(socialTags[1], compilation.options.output.path);
             } else {
