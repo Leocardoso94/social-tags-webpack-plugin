@@ -26,22 +26,26 @@
 
 
 # Install
+### webpack 4
 ```javascript
 npm install --save-dev social-tags-webpack-plugin
+```
+
+### webpack 3
+```javascript
+npm install --save-dev social-tags-webpack-plugin@0.0.9
 ```
 
 # Usage
 In your `webpack.config.js`:
 ```javascript
 // ES6+
-import SocialTags from 'social-tags-webpack-plugin'
-
-// ES5
-var SocialTags = require('social-tags-webpack-plugin')
+const SocialTags = require('social-tags-webpack-plugin')
 
 ...
 
 plugins: [
+    ...
     new SocialTags({
       appUrl: 'http://example.com/',
       facebook: {
