@@ -31,7 +31,6 @@ class SocialTagsPlugin {
     compiler.hooks.compilation.tap('SocialTagsPlugin', (compilation) => {
       compilation.hooks.htmlWebpackPluginAfterHtmlProcessing.tapAsync('SocialTagsPlugin', (htmlPluginData, callback) => {
         if (!this.htmlPlugin) this.htmlPlugin = true;
-        console.log(htmlPluginData);
         const tags = {};
 
         Object.entries(Object.assign(this.options.facebook, this.options.twitter))
