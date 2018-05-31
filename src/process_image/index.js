@@ -1,17 +1,25 @@
 import fs from 'fs';
 
-const processImage = (imagePath, publicPath) => {
-  const filename = imagePath.replace(/^.*[\\\/]/, '');
-  fs.readFile(imagePath, (err, data) => {
-    if (err) throw err;
-
-
-    setTimeout(() => {
-      fs.writeFile(`${publicPath}/${filename}`, data, (err2) => {
-        if (err2) throw err;
-      });
-    }, 1000);
+const writeImage = (publicPath, filename, data) => new Promise((resolve, reject) => {
+  fs.writeFile(`${publicPath}/${filename}`, data, (err) => {
+    err ? reject(err) : resolve({ sucess: true });
   });
+});
+
+const readImage = imagePath => new Promise((resolve, reject) => {
+  fs.readFile(imagePath, (err, data) => {
+    err ? reject(err) : resolve(data);
+  });
+});
+
+const processImage = async (imagePath, publicPath) => {
+  try {
+    const filename = imagePath.replace(/^.*[\\/]/, '');
+    const data = await readImage(imagePath);
+    await writeImage(publicPath, filename, data);
+  } catch (error) {
+    console.error(error);
+  }
 };
 
 
