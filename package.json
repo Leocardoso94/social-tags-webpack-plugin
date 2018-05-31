@@ -1,6 +1,6 @@
 {
   "name": "social-tags-webpack-plugin",
-  "version": "1.0.0",
+  "version": "1.0.1",
   "description": "A wepback plugin to generate social meta-tags",
   "main": "index.js",
   "repository": "https://github.com/leocardoso94/social-tags-webpack-plugin.git",
