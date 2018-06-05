@@ -18,7 +18,7 @@ const processImage = async (imagePath, publicPath) => {
     const data = await readImage(imagePath);
     await writeImage(publicPath, filename, data);
   } catch (error) {
-    console.error(error);
+    error.code === 'ENOENT' ? processImage(imagePath, publicPath) : console.error(error);
   }
 };
 
