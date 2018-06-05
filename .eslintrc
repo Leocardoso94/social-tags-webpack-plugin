@@ -5,10 +5,10 @@
     "commonjs": true,
     "es6": true,
     "node": true,
-    "mocha": true
+    "jest": true
   },
   "rules": {
-    "no-console": 0,
+    "no-console": "warn",
     "consistent-return": 0,
     "no-param-reassign": 0,
     "no-unused-expressions": ["error", {
