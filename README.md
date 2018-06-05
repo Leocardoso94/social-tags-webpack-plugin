@@ -27,12 +27,12 @@
 
 # Install
 ### webpack 4
-```javascript
+```
 npm install --save-dev social-tags-webpack-plugin
 ```
 
 ### webpack 3
-```javascript
+```
 npm install --save-dev social-tags-webpack-plugin@0.0.9
 ```
 
