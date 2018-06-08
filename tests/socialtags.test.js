@@ -1,8 +1,15 @@
-import { buildExample, getHtmlContent, socialOptions } from './test-utils';
+import {
+  buildExample,
+  getHtmlContent,
+  socialOptions,
+} from './test-utils';
 
 const htmlparser = require('htmlparser2');
 
-const { facebook, twitter } = socialOptions;
+const {
+  facebook,
+  twitter,
+} = socialOptions;
 
 
 describe('SocialTags', () => {
@@ -11,7 +18,7 @@ describe('SocialTags', () => {
     await buildExample();
     html = await getHtmlContent();
   });
-  it('should create the correcy meta tags', () => {
+  it('should create the correct meta tags', () => {
     expect(1).toBe(1);
 
     const parser = new htmlparser.Parser({
@@ -26,9 +33,10 @@ describe('SocialTags', () => {
         }
       },
 
-    }, { decodeEntities: true });
+    }, {
+      decodeEntities: true,
+    });
     parser.write(html);
     parser.end();
   });
 });
-
