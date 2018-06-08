@@ -1,11 +1,8 @@
-
 # social-tags-webpack-plugin
-
-
 
 `social-tags-webpack-plugin` is a webpack plugin that generates a the meta-tags to facebook and twitter, like this:
 
-``` html
+```html
 <meta property="fb:app_id" content="123456789">
 <meta property="og:url" content="http://example.com/page.html">
 <meta property="og:type" content="website">
@@ -24,20 +21,17 @@
 <meta name="twitter:image" content="http://example.com/image.jpg">
 ```
 
-
 # Install
-### webpack 4
+
 ```
 npm install --save-dev social-tags-webpack-plugin
-```
-
-### webpack 3
-```
-npm install --save-dev social-tags-webpack-plugin@0.0.9
+yarn add -D social-tags-webpack-plugin
 ```
 
 # Usage
+
 In your `webpack.config.js`:
+
 ```javascript
 // ES6+
 const SocialTags = require('social-tags-webpack-plugin')
@@ -71,6 +65,8 @@ plugins: [
     })
 ]
 ```
+
 ### Test your page with :
+
 - 🛠 [Facebook Sharing Debugger](https://developers.facebook.com/tools/debug/)
 - 🛠 [Twitter Card Validator](https://cards-dev.twitter.com/validator)
